@@ -4,6 +4,7 @@ import com.foffaps.estoquesimples.utils.exceptions.BadRequestException;
 import com.foffaps.estoquesimples.utils.exceptions.NotFoundException;
 import com.foffaps.estoquesimples.utils.models.PaginatedData;
 import com.foffaps.estoquesimples.utils.models.Pagination;
+import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

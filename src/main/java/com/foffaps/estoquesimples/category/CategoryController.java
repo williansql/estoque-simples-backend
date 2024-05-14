@@ -38,18 +38,19 @@ public class CategoryController {
     public ResponseEntity<ApiResponse<PaginatedData<Category>>> findAllCategory(
             CategoryCriteria categoryCriteria, @PageableDefault(size = 5) Pageable pageable){
         ApiResponse<PaginatedData<Category>> response = new ApiResponse<>();
-        PaginatedData<CategoryDTO> getCategory = service.findAllCategory(categoryCriteria, pageable);
+        PaginatedData<Category> getCategory = service.findAllCategory(categoryCriteria, pageable);
         response.of(
                 HttpStatus.FOUND,
-                "Categorias encontrada."
+                "Categorias encontrada.",
+                getCategory
         );
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<CategoryDTO>> findById(
+    public ResponseEntity<ApiResponse<Category>> findById(
             @PathVariable String id) throws NotFoundException {
-        ApiResponse<CategoryDTO> response = new ApiResponse<>();
+        ApiResponse<Category> response = new ApiResponse<>();
         Category foundCategory = service.findById(id);
         response.of(
                 HttpStatus.FOUND,

@@ -4,7 +4,6 @@ import com.foffaps.estoquesimples.utils.exceptions.BadRequestException;
 import com.foffaps.estoquesimples.utils.exceptions.NotFoundException;
 import com.foffaps.estoquesimples.utils.models.PaginatedData;
 import com.foffaps.estoquesimples.utils.models.Pagination;
-import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +23,9 @@ public class SubcategoryService {
 
     public Subcategory create(Subcategory subcategory) throws BadRequestException {
         Optional<Subcategory> existingSubcategory = repository.findByNameIgnoreCase(subcategory.getName());
+        String existingCategory = subcategory.getCategory().getId();
+        if (existingCategory.isEmpty())
+            throw new BadRequestException("Selecione uma categoria.");
         if (existingSubcategory.isPresent())
             throw new BadRequestException("Já existe uma categoria com esse nome");
         return repository.save(subcategory);

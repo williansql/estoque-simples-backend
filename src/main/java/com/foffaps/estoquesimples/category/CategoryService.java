@@ -30,14 +30,14 @@ public class CategoryService {
     }
 
 
-    public PaginatedData<CategoryDTO> findAllCategory(CategoryCriteria categoryCriteria, Pageable pageable) {
+    public PaginatedData<Category> findAllCategory(CategoryCriteria categoryCriteria, Pageable pageable) {
         PageRequest.of(
                 pageable.getPageNumber(),
                 pageable.getPageSize(),
                 Sort.by(Sort.Direction.ASC, "name")
         );
-        Specification<CategoryDTO> specification = categoryCriteria.createSpecification(criteria);
-        Page<CategoryDTO> category = repository.findAll(specification, pageable);
+        Specification<Category> specification = categoryCriteria.createSpecification(criteria);
+        Page<Category> category = repository.findAll(specification, pageable);
 
         return new PaginatedData<>(category.getContent(), Pagination.from(category, pageable));
 

@@ -13,5 +13,5 @@ public interface CategoryRepository extends JpaRepository<Category, String> {
 
     Optional<Category> findByNameIgnoreCase(String name);
 
-    Page<CategoryDTO> findAll(Specification<CategoryDTO> specification, Pageable pageable);
+    Page<Category> findAll(Specification<Category> specification, Pageable pageable);
 }

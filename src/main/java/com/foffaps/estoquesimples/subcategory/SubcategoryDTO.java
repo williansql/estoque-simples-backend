@@ -7,8 +7,9 @@ import lombok.Data;
 @Data
 public class SubcategoryDTO {
 
-    @NotNull(message = "O campo nome não pode ficar vazio")
+    @NotNull(message = "O campo nome não pode ficar vazio.")
     private String name;
 
+    @NotNull(message = "Selecione uma categoria.")
     private Category category;
 }

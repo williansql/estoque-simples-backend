@@ -25,13 +25,13 @@ public class CategoryService {
     public Category create(Category category) throws BadRequestException {
         Optional<Category> existsCategory = repository.findByNameIgnoreCase(category.getName());
         if (existsCategory.isPresent())
-            throw  new BadRequestException("Já existe uma categoria com esse nome.");
+            throw new BadRequestException("Já existe uma categoria com esse nome.");
         return repository.save(category);
     }
 
 
     public PaginatedData<Category> findAllCategory(CategoryCriteria categoryCriteria, Pageable pageable) {
-        PageRequest.of(
+        pageable = PageRequest.of(
                 pageable.getPageNumber(),
                 pageable.getPageSize(),
                 Sort.by(Sort.Direction.ASC, "name")

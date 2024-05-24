@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("category")
+@CrossOrigin(origins = "*")
 public class CategoryController {
 
     private final CategoryService service;
@@ -40,7 +41,7 @@ public class CategoryController {
         ApiResponse<PaginatedData<Category>> response = new ApiResponse<>();
         PaginatedData<Category> getCategory = service.findAllCategory(categoryCriteria, pageable);
         response.of(
-                HttpStatus.FOUND,
+                HttpStatus.OK,
                 "Categorias encontrada.",
                 getCategory
         );

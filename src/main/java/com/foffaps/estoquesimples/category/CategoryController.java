@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("category")
-@CrossOrigin(origins = "*")
 public class CategoryController {
 
     private final CategoryService service;
 
-
     @PostMapping
-    public ResponseEntity<ApiResponse<Category>> create (@RequestBody CategoryDTO categoryDTO) throws BadRequestException {
+    public ResponseEntity<ApiResponse<Category>> create(@RequestBody CategoryDTO categoryDTO) throws BadRequestException {
         ApiResponse<Category> response = new ApiResponse<>();
         var category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
@@ -37,7 +35,7 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<PaginatedData<Category>>> findAllCategory(
-            CategoryCriteria categoryCriteria, @PageableDefault(size = 5) Pageable pageable){
+            CategoryCriteria categoryCriteria, @PageableDefault(size = 5) Pageable pageable) {
         ApiResponse<PaginatedData<Category>> response = new ApiResponse<>();
         PaginatedData<Category> getCategory = service.findAllCategory(categoryCriteria, pageable);
         response.of(
@@ -62,7 +60,7 @@ public class CategoryController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<Category>> updateCategory(
-            @PathVariable String id, @RequestPart CategoryDTO categoryDTO) throws NotFoundException, BadRequestException{
+            @PathVariable String id, @RequestPart CategoryDTO categoryDTO) throws NotFoundException, BadRequestException {
         ApiResponse<Category> response = new ApiResponse<>();
         var category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);

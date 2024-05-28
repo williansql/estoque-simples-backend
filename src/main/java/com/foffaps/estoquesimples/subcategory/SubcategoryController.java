@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("subcategory")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "**")
 public class SubcategoryController {
 
     private final SubcategoryService service;
 
     @PostMapping
     public ResponseEntity<ApiResponse<Subcategory>> create(
-            @RequestBody SubcategoryDTO subcategryDTO) throws BadRequestException{
+            @RequestBody SubcategoryDTO subcategryDTO) throws BadRequestException {
         ApiResponse<Subcategory> response = new ApiResponse<>();
         var subcategory = new Subcategory();
         BeanUtils.copyProperties(subcategryDTO, subcategory);
@@ -29,7 +30,7 @@ public class SubcategoryController {
         response.of(
                 HttpStatus.CREATED,
                 "Subcategoria  "
-                + saveSubcategory.getName().toUpperCase() +
+                        + saveSubcategory.getName().toUpperCase() +
                         " criada com sucesso.",
                 saveSubcategory
         );
@@ -38,7 +39,7 @@ public class SubcategoryController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<PaginatedData<Subcategory>>> findAll(
-            SubcategoryCriteria criteria, @PageableDefault(size = 5)Pageable pageable){
+            SubcategoryCriteria criteria, @PageableDefault(size = 5) Pageable pageable) {
         ApiResponse<PaginatedData<Subcategory>> response = new ApiResponse<>();
         PaginatedData<Subcategory> pageSubcategory = service.findAll(criteria, pageable);
         response.of(
@@ -57,7 +58,7 @@ public class SubcategoryController {
         response.of(
                 HttpStatus.FOUND,
                 "Subcategoria "
-                + foundSubcategory.getName().toUpperCase() +
+                        + foundSubcategory.getName().toUpperCase() +
                         " encontrada com sucesso."
         );
         return ResponseEntity.status(response.getStatus()).body(response);
@@ -66,7 +67,7 @@ public class SubcategoryController {
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<Subcategory>> update(
             @PathVariable String id, @RequestPart SubcategoryDTO subcategoryDTO)
-            throws NotFoundException, BadRequestException{
+            throws NotFoundException, BadRequestException {
         ApiResponse<Subcategory> response = new ApiResponse<>();
         var subcategory = new Subcategory();
         BeanUtils.copyProperties(subcategoryDTO, subcategory);
@@ -74,7 +75,7 @@ public class SubcategoryController {
         response.of(
                 HttpStatus.OK,
                 "Subcategoria "
-                + updateSubcategory.getName().toUpperCase() +
+                        + updateSubcategory.getName().toUpperCase() +
                         " editada com sucesso.",
                 updateSubcategory
         );

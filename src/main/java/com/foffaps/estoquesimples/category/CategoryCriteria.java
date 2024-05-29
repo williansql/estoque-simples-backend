@@ -16,7 +16,7 @@ public class CategoryCriteria {
     public Specification<Category> createSpecification(CategoryCriteria criteria) {
         Specification<Category> specs = Specification.where(null);
         if (criteria.getName() != null) {
-            specs = specs.or(CategoryCriteria.searchName(criteria.getClass().getName()));
+            specs = specs.or(CategoryCriteria.searchName(criteria.getName()));
         }
         return specs;
     }

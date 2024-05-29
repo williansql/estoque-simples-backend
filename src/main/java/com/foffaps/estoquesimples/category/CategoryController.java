@@ -10,7 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,10 +23,16 @@ public class CategoryController {
     private final CategoryService service;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Category>> create(@RequestBody CategoryDTO categoryDTO) throws BadRequestException {
+    public ResponseEntity<ApiResponse<Category>> create(
+            @RequestBody CategoryDTO categoryDTO, BindingResult result)
+            throws BadRequestException {
         ApiResponse<Category> response = new ApiResponse<>();
         var category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
+        if (result.hasErrors()) {
+            throw new BadRequestException(
+                    Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
+        }
         Category saveCategory = service.create(category);
         response.of(
                 HttpStatus.CREATED,
@@ -35,9 +44,9 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<PaginatedData<Category>>> findAllCategory(
-            CategoryCriteria categoryCriteria, @PageableDefault(size = 5) Pageable pageable) {
+            CategoryCriteria criteria, @PageableDefault(size = 5) Pageable pageable) {
         ApiResponse<PaginatedData<Category>> response = new ApiResponse<>();
-        PaginatedData<Category> getCategory = service.findAllCategory(categoryCriteria, pageable);
+        PaginatedData<Category> getCategory = service.findAllCategory(criteria, pageable);
         response.of(
                 HttpStatus.OK,
                 "Categorias encontrada.",

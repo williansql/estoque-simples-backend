@@ -19,18 +19,22 @@ import java.util.Optional;
 public class CategoryService {
 
     private final CategoryRepository repository;
-    private final CategoryCriteria criteria;
+    private final CategoryCriteria categoryCriteria;
 
 
     public Category create(Category category) throws BadRequestException {
-        Optional<Category> existsCategory = repository.findByNameIgnoreCase(category.getName());
+        if (category.getName() == null || category.getName().isEmpty())
+            throw new BadRequestException("O campo 'NOME' não pode ser vazio.");
+        Optional<Category> existsCategory = repository.findByNameIgnoreCase(category.getName().toLowerCase());
         if (existsCategory.isPresent())
-            throw new BadRequestException("Já existe uma categoria com esse nome.");
+            throw new BadRequestException(
+                    "Já existe uma categoria com o nome: "
+                            + existsCategory.get().getName().toUpperCase());
         return repository.save(category);
     }
 
 
-    public PaginatedData<Category> findAllCategory(CategoryCriteria categoryCriteria, Pageable pageable) {
+    public PaginatedData<Category> findAllCategory(CategoryCriteria criteria, Pageable pageable) {
         pageable = PageRequest.of(
                 pageable.getPageNumber(),
                 pageable.getPageSize(),

@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS public.person
     phone character varying NOT NULL
 );
 
-DROP TABLE IF EXISTS public.category;
+--DROP TABLE IF EXISTS public.category;
 
 CREATE TABLE IF NOT EXISTS public.category
 (
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS public.category
     PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS public.subcategory;
+--DROP TABLE IF EXISTS public.subcategory;
 
 CREATE TABLE IF NOT EXISTS public.subcategory
 (
@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS public.subcategory
     name character varying NOT NULL,
     category_id uuid NOT NULL,
     PRIMARY KEY (id)
+    category_id UUID references public.category
 );
 
 DROP TABLE IF EXISTS public.supplier;

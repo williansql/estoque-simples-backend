@@ -19,46 +19,55 @@ import java.util.Optional;
 public class CategoryService {
 
     private final CategoryRepository repository;
-    private final CategoryCriteria criteria;
+    private final CategoryCriteria categoryCriteria;
 
 
     public Category create(Category category) throws BadRequestException {
-        Optional<Category> existsCategory = repository.findByNameIgnoreCase(category.getName());
+        if (category.getName() == null || category.getName().isEmpty())
+            throw new BadRequestException("O campo 'NOME' não pode ser vazio.");
+        Optional<Category> existsCategory = repository.findByNameIgnoreCase(category.getName().toLowerCase());
         if (existsCategory.isPresent())
-            throw  new BadRequestException("Já existe uma categoria com esse nome.");
+            throw new BadRequestException(
+                    "Já existe uma categoria com o nome: "
+                            + existsCategory.get().getName().toUpperCase());
         return repository.save(category);
     }
 
 
-    public PaginatedData<CategoryDTO> findAllCategory(CategoryCriteria categoryCriteria, Pageable pageable) {
-        PageRequest.of(
+    public PaginatedData<Category> findAllCategory(CategoryCriteria criteria, Pageable pageable) {
+        pageable = PageRequest.of(
                 pageable.getPageNumber(),
                 pageable.getPageSize(),
                 Sort.by(Sort.Direction.ASC, "name")
         );
-        Specification<CategoryDTO> specification = categoryCriteria.createSpecification(criteria);
-        Page<CategoryDTO> category = repository.findAll(specification, pageable);
+        Specification<Category> specification = categoryCriteria.createSpecification(criteria);
+        Page<Category> category = repository.findAll(specification, pageable);
 
         return new PaginatedData<>(category.getContent(), Pagination.from(category, pageable));
 
     }
 
-    public Category findById(String id) throws NotFoundException {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException("Categoria não encontrada."));
+    public Category findById(Integer id) throws NotFoundException {
+        return repository.findById(id).orElseThrow(
+                () -> new NotFoundException("Categoria não encontrada."));
     }
 
 
-    public Category update(String id, Category category) throws NotFoundException, BadRequestException {
-        repository.findById(id).orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
-        Optional<Category> existingCategory = repository.findByNameIgnoreCase(category.getName());
-        if (existingCategory.isPresent())
-            throw new BadRequestException("Já existe uma categoria com esse nome.");
-        return repository.save(category);
+    public Category update(Integer id, Category category) throws NotFoundException, BadRequestException {
+        Category existingCategory = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Não foi encontrada uma categoria com o ID: " + id));
+
+        if (category.getName() == null || category.getName().isBlank()) {
+            throw new BadRequestException("O nome da categoria não pode ser nulo ou vazio");
+        }
+
+        existingCategory.setName(category.getName());
+        return repository.save(existingCategory);
     }
 
-
-    public void deleteById(String id) throws NotFoundException {
-        repository.findById(id).orElseThrow(() -> new NotFoundException("Categoria não encontrada"));
+    public void deleteById(Integer id) throws NotFoundException {
+        repository.findById(id).orElseThrow(
+                () -> new NotFoundException("Categoria não encontrada"));
         repository.deleteById(id);
     }
 }

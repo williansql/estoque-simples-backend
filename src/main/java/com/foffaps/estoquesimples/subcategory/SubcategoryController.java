@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("subcategory")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "**")
 public class SubcategoryController {
 
     private final SubcategoryService service;
@@ -52,7 +51,7 @@ public class SubcategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Subcategory>> findById(
-            @PathVariable String id) throws NotFoundException {
+            @PathVariable Integer id) throws NotFoundException {
         ApiResponse<Subcategory> response = new ApiResponse<>();
         Subcategory foundSubcategory = service.findById(id);
         response.of(
@@ -66,7 +65,7 @@ public class SubcategoryController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<Subcategory>> update(
-            @PathVariable String id, @RequestPart SubcategoryDTO subcategoryDTO)
+            @PathVariable Integer id, @RequestPart SubcategoryDTO subcategoryDTO)
             throws NotFoundException, BadRequestException {
         ApiResponse<Subcategory> response = new ApiResponse<>();
         var subcategory = new Subcategory();
@@ -84,7 +83,7 @@ public class SubcategoryController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Subcategory>> deleteById(
-            @PathVariable String id) throws NotFoundException {
+            @PathVariable Integer id) throws NotFoundException {
         ApiResponse<Subcategory> response = new ApiResponse<>();
         service.deleteById(id);
         response.of(

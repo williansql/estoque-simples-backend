@@ -4,6 +4,7 @@ import com.foffaps.estoquesimples.utils.exceptions.BadRequestException;
 import com.foffaps.estoquesimples.utils.exceptions.NotFoundException;
 import com.foffaps.estoquesimples.utils.models.ApiResponse;
 import com.foffaps.estoquesimples.utils.models.PaginatedData;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Pageable;
@@ -57,7 +58,7 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Category>> findById(
-            @PathVariable String id) throws NotFoundException {
+            @PathVariable Integer id) throws NotFoundException {
         ApiResponse<Category> response = new ApiResponse<>();
         Category foundCategory = service.findById(id);
         response.of(
@@ -69,7 +70,7 @@ public class CategoryController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<Category>> updateCategory(
-            @PathVariable String id, @RequestPart CategoryDTO categoryDTO) throws NotFoundException, BadRequestException {
+            @PathVariable Integer id, @Valid @RequestBody CategoryDTO categoryDTO) throws NotFoundException, BadRequestException {
         ApiResponse<Category> response = new ApiResponse<>();
         var category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
@@ -85,7 +86,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Category>> deleteById(@PathVariable String id) throws NotFoundException {
+    public ResponseEntity<ApiResponse<Category>> deleteById(@PathVariable Integer id) throws NotFoundException {
         ApiResponse<Category> response = new ApiResponse<>();
         service.deleteById(id);
         response.of(

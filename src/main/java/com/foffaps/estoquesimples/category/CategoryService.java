@@ -47,26 +47,25 @@ public class CategoryService {
 
     }
 
-    public Category findById(String id) throws NotFoundException {
+    public Category findById(Integer id) throws NotFoundException {
         return repository.findById(id).orElseThrow(
                 () -> new NotFoundException("Categoria não encontrada."));
     }
 
 
-    public Category update(String id, Category category) throws NotFoundException, BadRequestException {
-        Optional<Category> existingCategory =
-                repository.findByNameIgnoreCase(category.getName());
-        if (existingCategory.isEmpty())
-            throw new BadRequestException("Já existe uma categoria com esse nome");
-        Category findCategory = repository
-                .findById(id)
-                .orElseThrow(
-                        () -> new NotFoundException("Categoria não encontrada"));
-        repository.save(findCategory);
-        return findCategory;
+    public Category update(Integer id, Category category) throws NotFoundException, BadRequestException {
+        Category existingCategory = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Não foi encontrada uma categoria com o ID: " + id));
+
+        if (category.getName() == null || category.getName().isBlank()) {
+            throw new BadRequestException("O nome da categoria não pode ser nulo ou vazio");
+        }
+
+        existingCategory.setName(category.getName());
+        return repository.save(existingCategory);
     }
 
-    public void deleteById(String id) throws NotFoundException {
+    public void deleteById(Integer id) throws NotFoundException {
         repository.findById(id).orElseThrow(
                 () -> new NotFoundException("Categoria não encontrada"));
         repository.deleteById(id);

@@ -10,7 +10,7 @@ import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Repository
-public interface SubcategoryRepository extends JpaRepository<Subcategory, String> {
+public interface SubcategoryRepository extends JpaRepository<Subcategory, Integer> {
 
     Optional<Subcategory> findByNameIgnoreCase(String name);
 

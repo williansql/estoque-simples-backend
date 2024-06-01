@@ -23,8 +23,8 @@ public class SubcategoryService {
 
     public Subcategory create(Subcategory subcategory) throws BadRequestException {
         Optional<Subcategory> existingSubcategory = repository.findByNameIgnoreCase(subcategory.getName());
-        String existingCategory = subcategory.getCategory().getId();
-        if (existingCategory.isEmpty())
+        Integer existingCategory = subcategory.getCategory().getId();
+        if (existingCategory == null)
             throw new BadRequestException("Selecione uma categoria.");
         if (existingSubcategory.isPresent())
             throw new BadRequestException("Já existe uma categoria com esse nome");
@@ -43,18 +43,18 @@ public class SubcategoryService {
         return new  PaginatedData<>(subcategory.getContent(), Pagination.from(subcategory, pageable));
     }
 
-    public Subcategory findById(String id) throws NotFoundException {
+    public Subcategory findById(Integer id) throws NotFoundException {
         Subcategory foundSubcategory = repository.findById(id).orElseThrow(
                 () -> new NotFoundException("Subcategoria não encontrada"));
         return foundSubcategory;
     }
 
-    public Subcategory update(String id, Subcategory subcategory) throws NotFoundException, BadRequestException {
+    public Subcategory update(Integer id, Subcategory subcategory) throws NotFoundException, BadRequestException {
         Optional<Subcategory> existingSubcategoria = repository.findByNameIgnoreCase(subcategory.getName());
         if (existingSubcategoria.isPresent())
             throw new BadRequestException("Já existe uma categoria com esse nome.");
         Subcategory editSubcategory = repository.findById(id).orElse(null);
-        if (editSubcategory.getId().isEmpty())
+        if (editSubcategory == null)
             throw new NotFoundException("Subcategoria não encontrada");
         editSubcategory.setName(subcategory.getName());
         editSubcategory.setCategory(subcategory.getCategory());
@@ -62,7 +62,7 @@ public class SubcategoryService {
         return editSubcategory;
     }
 
-    public void deleteById(String id) throws NotFoundException {
+    public void deleteById(Integer id) throws NotFoundException {
         Subcategory deleteSubcategory = repository
                 .findById(id)
                 .orElseThrow(

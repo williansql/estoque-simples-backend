@@ -17,21 +17,6 @@ ALTER TABLE IF EXISTS public.flow DROP CONSTRAINT IF EXISTS None;
 
 DROP TABLE IF EXISTS public.items;
 
-CREATE TABLE IF NOT EXISTS public.items
-(
-    id uuid NOT NULL,
-    name character varying NOT NULL,
-    model character varying NOT NULL,
-    description character varying,
-    price double precision NOT NULL,
-    status character varying NOT NULL,
-    unit_measure character varying,
-    unit_qtd double precision NOT NULL,
-    date_validation date,
-    subcategory_id uuid NOT NULL,
-    PRIMARY KEY (id)
-);
-
 DROP TABLE IF EXISTS public.person;
 
 CREATE TABLE IF NOT EXISTS public.person

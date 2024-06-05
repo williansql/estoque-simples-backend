@@ -21,7 +21,7 @@ public class CategoryCriteria {
         return specs;
     }
 
-    private static Specification<Category> searchName(String name) {
+    public static Specification<Category> searchName(String name) {
         return ((root, query, criteriaBuilder) ->
                 criteriaBuilder.like(
                         criteriaBuilder.lower(root.get("name")), "%" + name.toLowerCase() + "%"));

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Data
@@ -40,13 +41,13 @@ public class Items {
     private String sku;
 
     @Column(name = "unit_measure")
-    private String unitMeasureEnum;
+    private UnitMeasure unitMeasureEnum;
 
     @Column(name = "unit_measure_qtd")
     private Double unitMeasureQtd;
 
     @Column(name = "status")
-    private String statusEnum;
+    private StatusEnum statusEnum;
 
     @Column(name = "qtd")
     private Double qtd;

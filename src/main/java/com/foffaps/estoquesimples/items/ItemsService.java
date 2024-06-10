@@ -1,5 +1,9 @@
 package com.foffaps.estoquesimples.items;
 
+import com.foffaps.estoquesimples.items.entry.Entry;
+import com.foffaps.estoquesimples.items.entry.EntryRepository;
+import com.foffaps.estoquesimples.items.exit.Exit;
+import com.foffaps.estoquesimples.items.exit.ExitRepository;
 import com.foffaps.estoquesimples.utils.exceptions.BadRequestException;
 import com.foffaps.estoquesimples.utils.exceptions.NotFoundException;
 import com.foffaps.estoquesimples.utils.models.PaginatedData;
@@ -11,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -19,8 +24,11 @@ import java.util.Optional;
 public class ItemsService {
 
     private final ItemsRepository repository;
+    private final EntryRepository entryRepository;
+    private final ExitRepository exitRepository;
     private final ItemsCriteria itemsCriteria;
 
+    @Transactional
     public Items create(Items items) throws BadRequestException {
         Optional<Items> existingItems = repository.findByNameIgnoreCase(items.getName());
         if (existingItems.isPresent())
@@ -30,6 +38,8 @@ public class ItemsService {
         }
         String codItem = generateItemCode(items.getName());
         items.setCodItem(codItem);
+        items.setQtd(0.0); // Inicializa a quantidade como zero
+
         return repository.save(items);
     }
 
@@ -50,6 +60,7 @@ public class ItemsService {
                 () -> new NotFoundException("Categoria não encontrada."));
     }
 
+    @Transactional
     public Items update(Long id, Items items) throws NotFoundException, BadRequestException {
         if(repository.findByNameIgnoreCase(items.getName()).isPresent())
             throw new BadRequestException("Já existe um item com esse nome");
@@ -79,11 +90,54 @@ public class ItemsService {
         return repository.save(existingItems);
     }
 
-
+    @Transactional
     public void delete(Long id) throws NotFoundException {
         repository.findById(id).orElseThrow(
                 () -> new NotFoundException("Item não encontrado"));
         repository.deleteById(id);
+    }
+
+    @Transactional
+    public Entry addEntry(Long itemId, Entry entry) throws NotFoundException {
+        Items item = repository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException("Item não encontrado"));
+
+        entry.setItem(item);
+        entryRepository.save(entry);
+
+        updateItemQuantidade(item);
+
+        return entry;
+    }
+
+    @Transactional
+    public Exit addExit(Long itemId, Exit exit) throws NotFoundException {
+        Items item = repository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException("Item não encontrado"));
+
+        exit.setItem(item);
+        exitRepository.save(exit);
+
+        updateItemQuantidade(item);
+
+        return exit;
+    }
+
+    private void updateItemQuantidade(Items item) {
+        double totalEntrada = entryRepository.findAllByItemId(item.getId())
+                .stream()
+                .mapToDouble(Entry::getQuantity)
+                .sum();
+
+        double totalSaida = exitRepository.findAllByItemId(item.getId())
+                .stream()
+                .mapToDouble(Exit::getQuantity)
+                .sum();
+
+        double quantidadeAtual = totalEntrada - totalSaida;
+        item.setQtd(quantidadeAtual);
+
+        repository.save(item);
     }
 
     private String generateItemCode(String itemName) {

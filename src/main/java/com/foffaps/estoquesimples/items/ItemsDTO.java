@@ -18,14 +18,11 @@ public class ItemsDTO {
     private String branding;
     private String description;
     private Double buyPrice;
-
-    @NotNull
     private Double sellPrice;
-
     private String sku;
-    private String unitMeasureEnum;
+    private UnitMeasure unitMeasureEnum;
     private Double unitMeasureQtd;
-    private String statusEnum;
+    private StatusEnum statusEnum;
     private Timestamp validationDate;
     private Timestamp manufacturerDate;
     private Timestamp sellDate;

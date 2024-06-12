@@ -5,6 +5,8 @@ import com.foffaps.estoquesimples.person.supplier.Supplier;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -14,10 +16,14 @@ public class EntryDTO {
     @NotNull(message = "O nome do responsável não pode ficar vazio.")
     private String responsibleName;
     @NotNull(message = "O nome cpf do responsável não pode ficar vazio.")
-    private String cpf;
-    private Date dateEntry;
-    private Date validationDate;
+    private String responsibleCpf;
+    private LocalDateTime dateEntry;
+    private String validationDate;
+    private String fabricationDate;
+    private Double buyPrice;
     private Integer quantity;
+    private Supplier supplier;
     private Items items;
+
 
 }

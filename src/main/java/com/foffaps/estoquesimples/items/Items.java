@@ -51,15 +51,6 @@ public class Items {
     @Column(name = "qtd", nullable = false)
     private Double qtd = 0.0;
 
-    @Column(name = "validation_date")
-    private Timestamp validationDate;
-
-    @Column(name = "manufacturer_date")
-    private Timestamp manufacturerDate;
-
-    @Column(name = "sell_date")
-    private Timestamp sellDate;
-
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;

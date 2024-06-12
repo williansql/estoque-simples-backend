@@ -77,11 +77,8 @@ public class ItemsService {
         existingItems.setBuyPrice(items.getBuyPrice());
         existingItems.setSellPrice(items.getSellPrice());
         existingItems.setSku(items.getSku());
-        existingItems.setManufacturerDate(items.getManufacturerDate());
-        existingItems.setSellDate(items.getSellDate());
         existingItems.setStatusEnum(items.getStatusEnum());
         existingItems.setUnitMeasureQtd(items.getUnitMeasureQtd());
-        existingItems.setValidationDate(items.getValidationDate());
         existingItems.setCategory(items.getCategory());
         if (existingItems.getCodItem() == null) {
             String codItem = generateItemCode(existingItems.getName());

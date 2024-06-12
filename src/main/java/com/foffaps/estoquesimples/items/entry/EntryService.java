@@ -7,6 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 public class EntryService {
@@ -19,10 +25,15 @@ public class EntryService {
         Items item = itemsRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("Item não encontrado"));
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate.parse(entry.getFabricationDate(), formatter);
+        LocalDate.parse(entry.getValidationDate(), formatter);
+        entry.setDateEntry(LocalDateTime.now());
         entry.setItem(item);
         itemsRepository.findById(itemId).map(
                 it -> {
                     it.setQtd(it.getQtd() + entry.getQuantity());
+                    it.setBuyPrice(entry.getBuyPrice());
                     return it;
                 }
         );

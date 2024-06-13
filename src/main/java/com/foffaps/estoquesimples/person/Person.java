@@ -25,4 +25,7 @@ public class Person {
 
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "email")
+    private String email;
 }

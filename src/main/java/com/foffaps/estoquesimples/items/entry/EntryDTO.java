@@ -13,6 +13,9 @@ import java.util.List;
 @Data
 public class EntryDTO {
 
+    private String lotNumber;
+    private Boolean generateLot;
+
     @NotNull(message = "O nome do responsável não pode ficar vazio.")
     private String responsibleName;
     @NotNull(message = "O nome cpf do responsável não pode ficar vazio.")

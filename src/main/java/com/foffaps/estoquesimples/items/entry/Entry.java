@@ -18,6 +18,12 @@ public class Entry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "lot_number")
+    private String lotNumber;
+
+    @Column(name = "generate_lot")
+    private Boolean generateLot;
+
     @Column(name = "responsible_name")
     private String responsibleName;
 

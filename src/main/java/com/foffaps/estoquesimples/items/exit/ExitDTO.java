@@ -11,6 +11,9 @@ import java.util.List;
 @Data
 public class ExitDTO {
 
+    private Boolean generateLot;
+    private String sku;
+
     @NotNull(message = "O nome do responsável não pode ficar vazio.")
     private String responsibleName;
 
@@ -18,7 +21,14 @@ public class ExitDTO {
     private String cpf;
 
     private Date dateExit;
-    private Integer quantity;
-    private List<Items> items;
-    private Supplier supplier;
+    private List<ItemExitDTO> items;
+
+    @Data
+    public static class ItemExitDTO {
+        @NotNull(message = "O lote do item não pode ficar vazio.")
+        private String lotNumber;
+        private Integer quantity;
+        private Long itemId;
+        private Long supplierId;
+    }
 }

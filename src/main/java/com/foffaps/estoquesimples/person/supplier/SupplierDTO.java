@@ -5,12 +5,12 @@ import lombok.Data;
 @Data
 public class SupplierDTO {
 
-    @NotNull
+    @NotNull(message = "O nome do fornecedor não pode ficar vazio.")
     private String name;
-    @NotNull
+    @NotNull(message = "O telefone do fornecedor não pode ficar vazio.")
     private String phone;
-    @NotNull
+    @NotNull(message = "A identidade do fornecedor não pode ficar vazio.")
     private String identity;
-    @NotNull
+    @NotNull(message = "O nome fantasia do fornecedor não pode ficar vazio.")
     private String fantasyName;
 }

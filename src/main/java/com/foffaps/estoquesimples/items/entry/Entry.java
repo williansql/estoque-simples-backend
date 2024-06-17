@@ -5,9 +5,7 @@ import com.foffaps.estoquesimples.person.supplier.Supplier;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @Entity
@@ -23,6 +21,9 @@ public class Entry {
 
     @Column(name = "generate_lot")
     private Boolean generateLot;
+
+    @Column(name = "sku")
+    private String sku;
 
     @Column(name = "responsible_name")
     private String responsibleName;

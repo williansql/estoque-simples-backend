@@ -11,7 +11,7 @@ public class ItemsDTO {
 
     private String codItem;
 
-    @NotNull
+    @NotNull(message = "O nome do item deve ser informado")
     private String name;
 
     private String model;

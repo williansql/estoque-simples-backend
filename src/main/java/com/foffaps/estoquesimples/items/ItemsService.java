@@ -38,7 +38,7 @@ public class ItemsService {
         }
         String codItem = generateItemCode(items.getName());
         items.setCodItem(codItem);
-        items.setQtd(0.0); // Inicializa a quantidade como zero
+        items.setQtd(0.0);
 
         return repository.save(items);
     }
@@ -138,11 +138,11 @@ public class ItemsService {
     }
 
     private String generateItemCode(String itemName) {
-        String firstLetter = itemName.substring(0, 1).toLowerCase();
+        String thirdLetter = itemName.substring(0, 3).toLowerCase();
         int counter = 1;
         String codItem;
         do {
-            codItem = String.format("%s%03d", firstLetter, counter++);
+            codItem = String.format("%s%04d", thirdLetter, counter++);
         } while (repository.existsByCodItem(codItem));
         return codItem;
     }

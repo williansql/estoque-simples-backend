@@ -16,6 +16,15 @@ public class Exit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "lot_number")
+    private String lotNumber;
+
+    @Column(name = "generate_lot")
+    private Boolean generateLot;
+
+    @Column(name = "sku")
+    private String sku;
+
     @Column(name = "responsible_name")
     private String responsibleName;
 

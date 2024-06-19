@@ -11,21 +11,18 @@ public class ItemsDTO {
 
     private String codItem;
 
-    @NotNull
+    @NotNull(message = "O nome do item deve ser informado")
     private String name;
 
     private String model;
     private String branding;
     private String description;
     private Double buyPrice;
-
-    @NotNull
     private Double sellPrice;
-
     private String sku;
-    private String unitMeasureEnum;
+    private UnitMeasure unitMeasureEnum;
     private Double unitMeasureQtd;
-    private String statusEnum;
+    private StatusEnum statusEnum;
     private Timestamp validationDate;
     private Timestamp manufacturerDate;
     private Timestamp sellDate;

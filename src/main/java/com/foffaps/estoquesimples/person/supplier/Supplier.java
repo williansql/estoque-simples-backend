@@ -14,4 +14,11 @@ public class Supplier extends Person {
 
     @Column(name = "fantasy_name")
     private String fantasyName;
+
+    @Column(name = "municipal_registration")
+    private String municipalRegistration;
+
+    @Column(name = "state_registration")
+    private String stateRegistration;
+
 }

@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Data
@@ -49,20 +48,10 @@ public class Items {
     @Column(name = "status")
     private StatusEnum statusEnum;
 
-    @Column(name = "qtd")
-    private Double qtd;
-
-    @Column(name = "validation_date")
-    private Timestamp validationDate;
-
-    @Column(name = "manufacturer_date")
-    private Timestamp manufacturerDate;
-
-    @Column(name = "sell_date")
-    private Timestamp sellDate;
+    @Column(name = "qtd", nullable = false)
+    private Double qtd = 0.0;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
-
 }

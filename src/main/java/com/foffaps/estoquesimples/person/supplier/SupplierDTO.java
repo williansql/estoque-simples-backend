@@ -1,4 +1,5 @@
 package com.foffaps.estoquesimples.person.supplier;
+import com.foffaps.estoquesimples.flow.Flow;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -13,4 +14,5 @@ public class SupplierDTO {
     private String identity;
     @NotNull(message = "O nome fantasia do fornecedor não pode ficar vazio.")
     private String fantasyName;
+    private Flow flow;
 }

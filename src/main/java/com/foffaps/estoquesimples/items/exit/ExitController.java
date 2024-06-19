@@ -1,5 +1,6 @@
 package com.foffaps.estoquesimples.items.exit;
 
+import com.foffaps.estoquesimples.flow.Flow;
 import com.foffaps.estoquesimples.items.Items;
 import com.foffaps.estoquesimples.items.entry.Entry;
 import com.foffaps.estoquesimples.items.entry.EntryDTO;
@@ -32,6 +33,8 @@ public class ExitController {
                 HttpStatus.CREATED,
                 save.getItem().getName().toUpperCase() + ", QTD: " + save.getQuantity(),
                 save);
+        Flow flow = new Flow();
+        flow.setExit(exit);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }

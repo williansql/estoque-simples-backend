@@ -1,5 +1,6 @@
 package com.foffaps.estoquesimples.items;
 
+import com.foffaps.estoquesimples.flow.Flow;
 import com.foffaps.estoquesimples.utils.exceptions.BadRequestException;
 import com.foffaps.estoquesimples.utils.exceptions.NotFoundException;
 import com.foffaps.estoquesimples.utils.models.ApiResponse;
@@ -28,6 +29,8 @@ public class ItemsController {
         BeanUtils.copyProperties(itemsDTO, items);
         Items savedItems = service.create(items);
         response.of(HttpStatus.CREATED, "Item " + savedItems.getName().toUpperCase() + " criado.", savedItems);
+        Flow flow = new Flow();
+        flow.setItem(items);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 

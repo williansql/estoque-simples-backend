@@ -1,21 +1,19 @@
 package com.foffaps.estoquesimples.items.entry;
 
+import com.foffaps.estoquesimples.flow.Flow;
 import com.foffaps.estoquesimples.items.Items;
+import com.foffaps.estoquesimples.items.lot.Lot;
 import com.foffaps.estoquesimples.person.supplier.Supplier;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @Data
 public class EntryDTO {
 
+    @NotNull(message = "O campo Lote não pode ficar vazio.")
     private String lotNumber;
-    private Boolean generateLot;
-
     @NotNull(message = "O nome do responsável não pode ficar vazio.")
     private String responsibleName;
     @NotNull(message = "O nome cpf do responsável não pode ficar vazio.")
@@ -27,6 +25,10 @@ public class EntryDTO {
     private Integer quantity;
     private Supplier supplier;
     private Items items;
+    private Flow flow;
+    private Lot lot;
 
 
+    public void setFlow(Long id) {
+    }
 }

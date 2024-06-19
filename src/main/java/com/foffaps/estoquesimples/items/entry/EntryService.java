@@ -1,7 +1,11 @@
 package com.foffaps.estoquesimples.items.entry;
 
+import com.foffaps.estoquesimples.flow.Flow;
+import com.foffaps.estoquesimples.flow.FlowRepository;
 import com.foffaps.estoquesimples.items.Items;
 import com.foffaps.estoquesimples.items.ItemsRepository;
+import com.foffaps.estoquesimples.items.lot.Lot;
+import com.foffaps.estoquesimples.items.lot.LotRepository;
 import com.foffaps.estoquesimples.utils.exceptions.NotFoundException;
 import com.foffaps.estoquesimples.utils.models.PaginatedData;
 import com.foffaps.estoquesimples.utils.models.Pagination;
@@ -20,6 +24,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -29,7 +34,9 @@ public class EntryService {
 
     private final EntryRepository entryRepository;
     private final ItemsRepository itemsRepository;
+    private final FlowRepository flowRepository;
     private final EntryCriteria entryCriteria;
+    private final LotRepository lotRepository;
 
     @Transactional
     public Entry createEntry(Long itemId, Entry entry) throws NotFoundException {
@@ -65,6 +72,20 @@ public class EntryService {
                     return it;
                 }
         );
+        LocalDateTime date = LocalDateTime.now();
+        Flow flow = new Flow();
+        flow.setEntry(entry);
+        flow.setItem(entry.getItem());
+        flow.setOperation("ENTRADA");
+        flowRepository.save(flow);
+
+        Lot lot = new Lot();
+        lot.setDate(date);
+        lot.setTypeOperation("NOVO_LOTE");
+        lot.setLotNumber(entry.getLotNumber());
+        lot.setEntry(entry);
+        lotRepository.save(lot);
+
         return entryRepository.save(entry);
     }
 

@@ -1,5 +1,6 @@
 package com.foffaps.estoquesimples.items.entry;
 
+import com.foffaps.estoquesimples.flow.Flow;
 import com.foffaps.estoquesimples.utils.exceptions.NotFoundException;
 import com.foffaps.estoquesimples.utils.models.ApiResponse;
 import com.foffaps.estoquesimples.utils.models.PaginatedData;

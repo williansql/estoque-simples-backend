@@ -1,6 +1,7 @@
 package com.foffaps.estoquesimples.person.supplier;
 
 
+import com.foffaps.estoquesimples.flow.Flow;
 import com.foffaps.estoquesimples.utils.exceptions.BadRequestException;
 import com.foffaps.estoquesimples.utils.exceptions.NotFoundException;
 import com.foffaps.estoquesimples.utils.models.ApiResponse;
@@ -36,6 +37,8 @@ public class SupplierController {
                         " criado.",
                 saved
         );
+        Flow flow = new Flow();
+        flow.setSupplier(supplier);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 

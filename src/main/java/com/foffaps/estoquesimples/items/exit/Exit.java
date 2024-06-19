@@ -19,9 +19,6 @@ public class Exit {
     @Column(name = "lot_number")
     private String lotNumber;
 
-    @Column(name = "generate_lot")
-    private Boolean generateLot;
-
     @Column(name = "sku")
     private String sku;
 

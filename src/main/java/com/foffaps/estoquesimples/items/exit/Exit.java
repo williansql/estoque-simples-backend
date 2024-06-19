@@ -5,7 +5,7 @@ import com.foffaps.estoquesimples.person.supplier.Supplier;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -32,16 +32,16 @@ public class Exit {
     private String cpf;
 
     @Column(name = "date_exit")
-    private Date dateExit;
+    private LocalDate dateExit;
 
     @Column(name = "quantity")
-    private Integer quantity;
+    private Double quantity;
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     private Items item;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "supplier_id", nullable = false)
     private Supplier supplier;
 }

@@ -5,6 +5,7 @@ import com.foffaps.estoquesimples.person.supplier.Supplier;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -20,15 +21,13 @@ public class ExitDTO {
     @NotNull(message = "O nome cpf do responsável não pode ficar vazio.")
     private String cpf;
 
-    private Date dateExit;
-    private List<ItemExitDTO> items;
+    private Double quantity;
 
-    @Data
-    public static class ItemExitDTO {
-        @NotNull(message = "O lote do item não pode ficar vazio.")
-        private String lotNumber;
-        private Integer quantity;
-        private Long itemId;
-        private Long supplierId;
-    }
+    private String lotNumber;
+
+    private LocalDate dateExit;
+
+    private Items item;
+
+    private Supplier supplier;
 }

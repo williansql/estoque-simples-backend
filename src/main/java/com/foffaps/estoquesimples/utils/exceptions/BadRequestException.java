@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-public class BadRequestException extends Exception {
+public class BadRequestException extends RuntimeException {
     public BadRequestException(String message) {
         super(message);
     }
@@ -13,7 +13,7 @@ public class BadRequestException extends Exception {
         super(message, cause);
     }
 
-    public Integer returnStatusCode() {
-        return HttpStatus.BAD_REQUEST.value();
+    public HttpStatus returnStatusCode() {
+        return HttpStatus.BAD_REQUEST;
     }
 }

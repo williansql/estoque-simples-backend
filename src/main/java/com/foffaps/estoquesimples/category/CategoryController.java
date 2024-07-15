@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,15 +26,11 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<ApiResponse<Category>> create(
-            @RequestBody CategoryDTO categoryDTO, BindingResult result)
-            throws BadRequestException {
+            @RequestBody @Valid CategoryDTO categoryDTO, BindingResult result)
+             {
         ApiResponse<Category> response = new ApiResponse<>();
         var category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
-        if (result.hasErrors()) {
-            throw new BadRequestException(
-                    Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
-        }
         Category saveCategory = service.create(category);
         response.of(
                 HttpStatus.CREATED,
@@ -45,7 +42,8 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<PaginatedData<Category>>> findAllCategory(
-            CategoryCriteria criteria, @PageableDefault(size = 5) Pageable pageable) {
+            CategoryCriteria criteria,
+            @PageableDefault(size = 5, sort = "name", direction = Sort.Direction.ASC) Pageable pageable) {
         ApiResponse<PaginatedData<Category>> response = new ApiResponse<>();
         PaginatedData<Category> getCategory = service.findAllCategory(criteria, pageable);
         response.of(

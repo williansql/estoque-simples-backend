@@ -20,11 +20,11 @@ public class ItemsDTO {
     private Double buyPrice;
     private Double sellPrice;
     private String sku;
-    private UnitMeasure unitMeasureEnum;
+    private String unitMeasureEnum;
     private Double unitMeasureQtd;
-    private StatusEnum statusEnum;
+    private String statusEnum;
     private Timestamp validationDate;
     private Timestamp manufacturerDate;
     private Timestamp sellDate;
-    private Category category;
+    private String category;
 }

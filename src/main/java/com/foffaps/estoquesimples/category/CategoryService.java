@@ -30,6 +30,7 @@ public class CategoryService {
             throw new BadRequestException(
                     "Já existe uma categoria com o nome: "
                             + existsCategory.get().getName().toUpperCase());
+        category.setName(category.getName().toLowerCase());
         return repository.save(category);
     }
 

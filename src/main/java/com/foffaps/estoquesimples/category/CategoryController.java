@@ -45,7 +45,7 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<PaginatedData<Category>>> findAllCategory(
-            CategoryCriteria criteria, @PageableDefault(size = 5) Pageable pageable) {
+            CategoryCriteria criteria, Pageable pageable) {
         ApiResponse<PaginatedData<Category>> response = new ApiResponse<>();
         PaginatedData<Category> getCategory = service.findAllCategory(criteria, pageable);
         response.of(

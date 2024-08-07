@@ -40,18 +40,17 @@ public class Items {
     private String sku;
 
     @Column(name = "unit_measure")
-    private UnitMeasure unitMeasureEnum;
+    private String unitMeasureEnum;
 
     @Column(name = "unit_measure_qtd")
     private Double unitMeasureQtd;
 
     @Column(name = "status")
-    private StatusEnum statusEnum;
+    private String statusEnum;
 
     @Column(name = "qtd", nullable = false)
     private Double qtd = 0.0;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    @Column(name = "category")
+    private String category;
 }

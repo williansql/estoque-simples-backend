@@ -1,4 +1,4 @@
-package com.foffaps.estoquesimples.items.entry;
+package com.foffaps.estoquesimples.items.input;
 
 import lombok.Data;
 import org.springframework.data.jpa.domain.Specification;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Data
-public class EntryCriteria {
+public class InputItemsCriteria {
 
     String lotNumber;
     String responsibleName;
@@ -14,51 +14,51 @@ public class EntryCriteria {
     String validationDate;
     String sku;
 
-    public Specification<Entry> createSpecification(EntryCriteria criteria) {
-        Specification<Entry> specification = Specification.where(null);
+    public Specification<InputItems> createSpecification(InputItemsCriteria criteria) {
+        Specification<InputItems> specification = Specification.where(null);
         if (criteria.getLotNumber() != null) {
-            specification = specification.and(EntryCriteria.searchLotNumber(criteria.getLotNumber()));
+            specification = specification.and(InputItemsCriteria.searchLotNumber(criteria.getLotNumber()));
         }
         if (criteria.getResponsibleName() != null) {
-            specification = specification.and(EntryCriteria.searchResponsibleName(criteria.getResponsibleName()));
+            specification = specification.and(InputItemsCriteria.searchResponsibleName(criteria.getResponsibleName()));
         }
         if (criteria.getResponsibleCpf() != null) {
-            specification = specification.and(EntryCriteria.searchResponsibleCpf(criteria.getResponsibleCpf()));
+            specification = specification.and(InputItemsCriteria.searchResponsibleCpf(criteria.getResponsibleCpf()));
         }
         if (criteria.getValidationDate() != null) {
-            specification = specification.and(EntryCriteria.searchValidationDate(criteria.getValidationDate()));
+            specification = specification.and(InputItemsCriteria.searchValidationDate(criteria.getValidationDate()));
         }
         if (criteria.getSku() != null) {
-            specification = specification.and(EntryCriteria.searchSku(criteria.getSku()));
+            specification = specification.and(InputItemsCriteria.searchSku(criteria.getSku()));
         }
         return specification;
     }
 
-    private static Specification<Entry> searchLotNumber(String lotNumber) {
+    private static Specification<InputItems> searchLotNumber(String lotNumber) {
         return ((root, query, criteriaBuilder) ->
                 criteriaBuilder.like(criteriaBuilder.lower(
                         root.get("lotNumber")), "%" + lotNumber.toLowerCase() + "%"));
     }
 
-    private static Specification<Entry> searchResponsibleName(String responsibleName) {
+    private static Specification<InputItems> searchResponsibleName(String responsibleName) {
         return ((root, query, criteriaBuilder) ->
                 criteriaBuilder.like(criteriaBuilder.lower(
                         root.get("responsibleName")), "%" + responsibleName.toLowerCase() + "%"));
     }
 
-    private static Specification<Entry> searchResponsibleCpf(String responsibleCpf) {
+    private static Specification<InputItems> searchResponsibleCpf(String responsibleCpf) {
         return ((root, query, criteriaBuilder) ->
                 criteriaBuilder.like(criteriaBuilder.lower(
                         root.get("responsibleCpf")), "%" + responsibleCpf.toLowerCase() + "%"));
     }
 
-    private static Specification<Entry> searchValidationDate(String validationDate) {
+    private static Specification<InputItems> searchValidationDate(String validationDate) {
         return ((root, query, criteriaBuilder) ->
                 criteriaBuilder.like(criteriaBuilder.lower(
                         root.get("validationDate")), "%" + validationDate.toLowerCase() + "%"));
     }
 
-    private static Specification<Entry> searchSku(String sku) {
+    private static Specification<InputItems> searchSku(String sku) {
         return ((root, query, criteriaBuilder) ->
                 criteriaBuilder.like(criteriaBuilder.lower(
                         root.get("sku")), "%" + sku.toLowerCase() + "%"));

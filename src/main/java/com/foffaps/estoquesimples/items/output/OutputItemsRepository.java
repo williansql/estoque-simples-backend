@@ -1,0 +1,12 @@
+package com.foffaps.estoquesimples.items.output;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface OutputItemsRepository extends JpaRepository<OutputItems, Long> {
+    List<OutputItems> findAllByItemId(Long itemId);
+
+    boolean existsByLotNumber(String lotNumber);
+}

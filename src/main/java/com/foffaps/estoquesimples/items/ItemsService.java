@@ -1,9 +1,9 @@
 package com.foffaps.estoquesimples.items;
 
-import com.foffaps.estoquesimples.items.entry.Entry;
-import com.foffaps.estoquesimples.items.entry.EntryRepository;
-import com.foffaps.estoquesimples.items.exit.Exit;
-import com.foffaps.estoquesimples.items.exit.ExitRepository;
+import com.foffaps.estoquesimples.items.input.InputItems;
+import com.foffaps.estoquesimples.items.input.InputItemsRepository;
+import com.foffaps.estoquesimples.items.output.Exit;
+import com.foffaps.estoquesimples.items.output.OutputItemsRepository;
 import com.foffaps.estoquesimples.utils.exceptions.BadRequestException;
 import com.foffaps.estoquesimples.utils.exceptions.NotFoundException;
 import com.foffaps.estoquesimples.utils.models.PaginatedData;
@@ -24,8 +24,8 @@ import java.util.Optional;
 public class ItemsService {
 
     private final ItemsRepository repository;
-    private final EntryRepository entryRepository;
-    private final ExitRepository exitRepository;
+    private final InputItemsRepository inputItemsRepository;
+    private final OutputItemsRepository outputItemsRepository;
     private final ItemsCriteria itemsCriteria;
 
     @Transactional
@@ -95,16 +95,16 @@ public class ItemsService {
     }
 
     @Transactional
-    public Entry addEntry(Long itemId, Entry entry) throws NotFoundException {
+    public InputItems addEntry(Long itemId, InputItems inputItems) throws NotFoundException {
         Items item = repository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("Item não encontrado"));
 
-        entry.setItem(item);
-        entryRepository.save(entry);
+        inputItems.setItem(item);
+        inputItemsRepository.save(inputItems);
 
         updateItemQuantidade(item);
 
-        return entry;
+        return inputItems;
     }
 
     @Transactional
@@ -113,7 +113,7 @@ public class ItemsService {
                 .orElseThrow(() -> new NotFoundException("Item não encontrado"));
 
         exit.setItem(item);
-        exitRepository.save(exit);
+        outputItemsRepository.save(exit);
 
         updateItemQuantidade(item);
 
@@ -121,12 +121,12 @@ public class ItemsService {
     }
 
     private void updateItemQuantidade(Items item) {
-        double totalEntrada = entryRepository.findAllByItemId(item.getId())
+        double totalEntrada = inputItemsRepository.findAllByItemId(item.getId())
                 .stream()
-                .mapToDouble(Entry::getQuantity)
+                .mapToDouble(InputItems::getQuantity)
                 .sum();
 
-        double totalSaida = exitRepository.findAllByItemId(item.getId())
+        double totalSaida = outputItemsRepository.findAllByItemId(item.getId())
                 .stream()
                 .mapToDouble(Exit::getQuantity)
                 .sum();

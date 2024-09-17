@@ -1,4 +1,4 @@
-package com.foffaps.estoquesimples.items.entry;
+package com.foffaps.estoquesimples.items.input;
 
 import com.foffaps.estoquesimples.items.Items;
 import com.foffaps.estoquesimples.person.supplier.Supplier;
@@ -6,11 +6,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "entry")
-public class Entry {
+public class InputItems {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +46,7 @@ public class Entry {
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
-    private Items item;
+    private List<Items> item;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id", nullable = false)

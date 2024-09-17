@@ -1,6 +1,5 @@
-package com.foffaps.estoquesimples.items.entry;
+package com.foffaps.estoquesimples.items.input;
 
-import com.foffaps.estoquesimples.flow.Flow;
 import com.foffaps.estoquesimples.utils.exceptions.NotFoundException;
 import com.foffaps.estoquesimples.utils.models.ApiResponse;
 import com.foffaps.estoquesimples.utils.models.PaginatedData;
@@ -15,17 +14,17 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("items/entries")
 @RequiredArgsConstructor
-public class EntryController {
+public class InputItemsController {
 
-    private final EntryService entryService;
+    private final InputItemsService inputItemsService;
 
     @PostMapping("/{itemId}")
-    public ResponseEntity<ApiResponse<Entry>> createEntry(
-            @PathVariable Long itemId, @RequestBody EntryDTO entryDTO) throws NotFoundException {
-        ApiResponse<Entry> response = new ApiResponse<>();
-        var entry = new Entry();
-        BeanUtils.copyProperties(entryDTO, entry);
-        Entry save = entryService.createEntry(itemId, entry);
+    public ResponseEntity<ApiResponse<InputItems>> createEntry(
+            @PathVariable Long itemId, @RequestBody InputItemsDTO inputItemsDTO) throws NotFoundException {
+        ApiResponse<InputItems> response = new ApiResponse<>();
+        var entry = new InputItems();
+        BeanUtils.copyProperties(inputItemsDTO, entry);
+        InputItems save = inputItemsService.createEntry(itemId, entry);
         response.of(
                 HttpStatus.CREATED,
                 "Entrada criada com sucesso!",
@@ -34,10 +33,10 @@ public class EntryController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<PaginatedData<Entry>>> findAll(
-            EntryCriteria criteria, @PageableDefault(size = 5) Pageable pageable) {
-        ApiResponse<PaginatedData<Entry>> response = new ApiResponse<>();
-        PaginatedData<Entry> paginatedData = entryService.findAll(criteria, pageable);
+    public ResponseEntity<ApiResponse<PaginatedData<InputItems>>> findAll(
+            InputItemsCriteria criteria, @PageableDefault(size = 5) Pageable pageable) {
+        ApiResponse<PaginatedData<InputItems>> response = new ApiResponse<>();
+        PaginatedData<InputItems> paginatedData = inputItemsService.findAll(criteria, pageable);
         response.of(HttpStatus.OK, "Lista de entradas", paginatedData);
         return ResponseEntity.status(response.getStatus()).body(response);
     }

@@ -1,4 +1,4 @@
-package com.foffaps.estoquesimples.items.entry;
+package com.foffaps.estoquesimples.items.input;
 
 import com.foffaps.estoquesimples.flow.Flow;
 import com.foffaps.estoquesimples.items.Items;
@@ -10,7 +10,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class EntryDTO {
+public class InputItemsDTO {
 
     @NotNull(message = "O campo Lote não pode ficar vazio.")
     private String lotNumber;

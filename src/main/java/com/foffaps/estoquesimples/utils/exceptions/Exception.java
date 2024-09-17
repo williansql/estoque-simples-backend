@@ -17,8 +17,4 @@ public class Exception extends java.lang.Exception {
         return this.getClass().getSimpleName() + ": " + getMessage();
     }
 
-    public Integer returnStatusCode() {
-        return HttpStatus.BAD_REQUEST.value();
-    }
 }
-

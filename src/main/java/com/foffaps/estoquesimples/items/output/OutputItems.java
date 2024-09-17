@@ -1,4 +1,4 @@
-package com.foffaps.estoquesimples.items.exit;
+package com.foffaps.estoquesimples.items.output;
 
 import com.foffaps.estoquesimples.items.Items;
 import com.foffaps.estoquesimples.person.supplier.Supplier;
@@ -6,11 +6,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
 @Table(name = "exit_items")
-public class Exit {
+public class OutputItems {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,17 +27,17 @@ public class Exit {
     private String responsibleName;
 
     @Column(name = "responsible_cpf")
-    private String cpf;
+    private String responsibleCpf;
 
-    @Column(name = "date_exit")
-    private LocalDate dateExit;
+    @Column(name = "date_output")
+    private LocalDate dateOutput;
 
     @Column(name = "quantity")
     private Double quantity;
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
-    private Items item;
+    private List<Items> item;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id", nullable = false)

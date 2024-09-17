@@ -15,4 +15,11 @@ public class GeneralHandler {
         apiResponse.of(e.returnStatusCode(), e.getMessage());
         return ResponseEntity.status(e.returnStatusCode()).body(apiResponse);
     }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<?> handleNotFoundException(NotFoundException e) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.of(e.returnStatusCode(), e.getMessage());
+        return ResponseEntity.status(e.returnStatusCode()).body(apiResponse);
+    }
 }

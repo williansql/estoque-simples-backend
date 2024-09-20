@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("items/entries")
+@RequestMapping("input")
 @RequiredArgsConstructor
 public class InputItemsController {
 
@@ -22,9 +22,9 @@ public class InputItemsController {
     public ResponseEntity<ApiResponse<InputItems>> createEntry(
             @PathVariable Long itemId, @RequestBody InputItemsDTO inputItemsDTO) throws NotFoundException {
         ApiResponse<InputItems> response = new ApiResponse<>();
-        var entry = new InputItems();
-        BeanUtils.copyProperties(inputItemsDTO, entry);
-        InputItems save = inputItemsService.createEntry(itemId, entry);
+        var inputItems = new InputItems();
+        BeanUtils.copyProperties(inputItemsDTO, inputItems);
+        InputItems save = inputItemsService.createEntry(itemId, inputItems);
         response.of(
                 HttpStatus.CREATED,
                 "Entrada criada com sucesso!",

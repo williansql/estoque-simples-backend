@@ -1,4 +1,4 @@
-package com.foffaps.estoquesimples.items;
+package com.foffaps.estoquesimples.items.items;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,4 +1,4 @@
-package com.foffaps.estoquesimples.items;
+package com.foffaps.estoquesimples.items.items;
 
 public enum StatusEnum {
     QUEBRADO,

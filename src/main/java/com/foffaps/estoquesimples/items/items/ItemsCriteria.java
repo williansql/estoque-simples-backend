@@ -1,4 +1,4 @@
-package com.foffaps.estoquesimples.items;
+package com.foffaps.estoquesimples.items.items;
 
 import lombok.Data;
 import org.springframework.data.jpa.domain.Specification;

@@ -1,7 +1,6 @@
-package com.foffaps.estoquesimples.items;
+package com.foffaps.estoquesimples.items.items;
 
 import com.foffaps.estoquesimples.category.Category;
-import com.foffaps.estoquesimples.flow.Flow;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -28,5 +27,4 @@ public class ItemsDTO {
     private Timestamp manufacturerDate;
     private Timestamp sellDate;
     private Category category;
-    private Flow flow;
 }

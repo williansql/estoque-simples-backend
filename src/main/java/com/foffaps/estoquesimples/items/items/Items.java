@@ -1,10 +1,8 @@
-package com.foffaps.estoquesimples.items;
+package com.foffaps.estoquesimples.items.items;
 
 import com.foffaps.estoquesimples.category.Category;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.sql.Timestamp;
 
 @Entity
 @Data

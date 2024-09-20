@@ -1,8 +1,6 @@
-package com.foffaps.estoquesimples.items;
+package com.foffaps.estoquesimples.items.items;
 
-import com.foffaps.estoquesimples.items.input.InputItems;
 import com.foffaps.estoquesimples.items.input.InputItemsRepository;
-import com.foffaps.estoquesimples.items.output.Exit;
 import com.foffaps.estoquesimples.items.output.OutputItemsRepository;
 import com.foffaps.estoquesimples.utils.exceptions.BadRequestException;
 import com.foffaps.estoquesimples.utils.exceptions.NotFoundException;
@@ -92,49 +90,6 @@ public class ItemsService {
         repository.findById(id).orElseThrow(
                 () -> new NotFoundException("Item não encontrado"));
         repository.deleteById(id);
-    }
-
-    @Transactional
-    public InputItems addEntry(Long itemId, InputItems inputItems) throws NotFoundException {
-        Items item = repository.findById(itemId)
-                .orElseThrow(() -> new NotFoundException("Item não encontrado"));
-
-        inputItems.setItem(item);
-        inputItemsRepository.save(inputItems);
-
-        updateItemQuantidade(item);
-
-        return inputItems;
-    }
-
-    @Transactional
-    public Exit addExit(Long itemId, Exit exit) throws NotFoundException {
-        Items item = repository.findById(itemId)
-                .orElseThrow(() -> new NotFoundException("Item não encontrado"));
-
-        exit.setItem(item);
-        outputItemsRepository.save(exit);
-
-        updateItemQuantidade(item);
-
-        return exit;
-    }
-
-    private void updateItemQuantidade(Items item) {
-        double totalEntrada = inputItemsRepository.findAllByItemId(item.getId())
-                .stream()
-                .mapToDouble(InputItems::getQuantity)
-                .sum();
-
-        double totalSaida = outputItemsRepository.findAllByItemId(item.getId())
-                .stream()
-                .mapToDouble(Exit::getQuantity)
-                .sum();
-
-        double quantidadeAtual = totalEntrada - totalSaida;
-        item.setQtd(quantidadeAtual);
-
-        repository.save(item);
     }
 
     private String generateItemCode(String itemName) {

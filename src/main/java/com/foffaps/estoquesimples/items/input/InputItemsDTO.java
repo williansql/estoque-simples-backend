@@ -1,13 +1,12 @@
 package com.foffaps.estoquesimples.items.input;
 
-import com.foffaps.estoquesimples.flow.Flow;
-import com.foffaps.estoquesimples.items.Items;
-import com.foffaps.estoquesimples.items.lot.Lot;
+import com.foffaps.estoquesimples.items.items.Items;
 import com.foffaps.estoquesimples.person.supplier.Supplier;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class InputItemsDTO {
@@ -24,11 +23,5 @@ public class InputItemsDTO {
     private Double buyPrice;
     private Integer quantity;
     private Supplier supplier;
-    private Items items;
-    private Flow flow;
-    private Lot lot;
-
-
-    public void setFlow(Long id) {
-    }
+    private Items item;
 }

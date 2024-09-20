@@ -1,6 +1,6 @@
 package com.foffaps.estoquesimples.items.output;
 
-import com.foffaps.estoquesimples.items.Items;
+import com.foffaps.estoquesimples.items.items.Items;
 import com.foffaps.estoquesimples.person.supplier.Supplier;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -37,7 +37,7 @@ public class OutputItems {
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
-    private List<Items> item;
+    private Items item;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id", nullable = false)

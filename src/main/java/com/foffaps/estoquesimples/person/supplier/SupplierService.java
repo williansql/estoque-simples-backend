@@ -1,6 +1,5 @@
 package com.foffaps.estoquesimples.person.supplier;
 
-import com.foffaps.estoquesimples.flow.Flow;
 import com.foffaps.estoquesimples.utils.exceptions.BadRequestException;
 import com.foffaps.estoquesimples.utils.exceptions.NotFoundException;
 import com.foffaps.estoquesimples.utils.models.PaginatedData;

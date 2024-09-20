@@ -1,7 +1,6 @@
 package com.foffaps.estoquesimples.items.output;
 
-import com.foffaps.estoquesimples.flow.Flow;
-import com.foffaps.estoquesimples.items.Items;
+import com.foffaps.estoquesimples.items.items.Items;
 import com.foffaps.estoquesimples.person.supplier.Supplier;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

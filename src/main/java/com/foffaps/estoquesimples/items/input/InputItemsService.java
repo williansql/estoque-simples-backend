@@ -1,11 +1,7 @@
 package com.foffaps.estoquesimples.items.input;
 
-import com.foffaps.estoquesimples.flow.Flow;
-import com.foffaps.estoquesimples.flow.FlowRepository;
-import com.foffaps.estoquesimples.items.Items;
-import com.foffaps.estoquesimples.items.ItemsRepository;
-import com.foffaps.estoquesimples.items.lot.Lot;
-import com.foffaps.estoquesimples.items.lot.LotRepository;
+import com.foffaps.estoquesimples.items.items.Items;
+import com.foffaps.estoquesimples.items.items.ItemsRepository;
 import com.foffaps.estoquesimples.utils.exceptions.NotFoundException;
 import com.foffaps.estoquesimples.utils.models.PaginatedData;
 import com.foffaps.estoquesimples.utils.models.Pagination;
@@ -29,7 +25,6 @@ public class InputItemsService {
     private final InputItemsRepository inputItemsRepository;
     private final ItemsRepository itemsRepository;
     private final InputItemsCriteria inputItemsCriteria;
-    private final LotRepository lotRepository;
 
     @Transactional
     public InputItems createEntry(Long itemId, InputItems inputItems) throws NotFoundException {
@@ -43,7 +38,6 @@ public class InputItemsService {
             LocalDate.parse(inputItems.getValidationDate().formatted(formatter));
         }
         inputItems.setDateEntry(LocalDateTime.now());
-        inputItems.setItem(item);
         itemsRepository.findById(itemId).map(
                 it -> {
                     it.setQtd(it.getQtd() + inputItems.getQuantity());
@@ -58,7 +52,7 @@ public class InputItemsService {
         pageable = PageRequest.of(
                 pageable.getPageNumber(),
                 pageable.getPageSize(),
-                Sort.by(Sort.Direction.ASC, "lotNumber"));
+                Sort.by(Sort.Direction.ASC, "validationDate"));
         Specification<InputItems> specification = inputItemsCriteria.createSpecification(criteria);
         Page<InputItems> pageEntry = inputItemsRepository.findAll(specification, pageable);
         return new PaginatedData<>(pageEntry.getContent(), Pagination.from(pageEntry, pageable));

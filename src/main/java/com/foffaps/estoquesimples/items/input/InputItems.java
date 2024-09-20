@@ -1,6 +1,6 @@
 package com.foffaps.estoquesimples.items.input;
 
-import com.foffaps.estoquesimples.items.Items;
+import com.foffaps.estoquesimples.items.items.Items;
 import com.foffaps.estoquesimples.person.supplier.Supplier;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -41,12 +41,15 @@ public class InputItems {
     @Column(name = "buy_price")
     private Double buyPrice;
 
+    @Column(name = "sell_price")
+    private Double sellPrice;
+
     @Column(name = "quantity")
     private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
-    private List<Items> item;
+    private Items item;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id", nullable = false)

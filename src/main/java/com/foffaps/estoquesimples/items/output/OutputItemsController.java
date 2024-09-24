@@ -18,14 +18,13 @@ public class OutputItemsController {
 
     private final OutputItemsService outputItemsService;
 
-    @PostMapping("/{itemId}")
+    @PostMapping
     public ResponseEntity<ApiResponse<OutputItems>> createEntry(
-            @PathVariable Long itemID,
             @RequestBody OutpuItemsDTO outpuItemsDTO) {
         ApiResponse<OutputItems> response = new ApiResponse<>();
         var outputItems = new OutputItems();
         BeanUtils.copyProperties(outpuItemsDTO, outputItems);
-        OutputItems save = outputItemsService.create(itemID, outputItems);
+        OutputItems save = outputItemsService.create(outputItems);
         response.of(
                 HttpStatus.CREATED,
                 "Entrada registrada com sucesso, Lote Nº: " + save.getLotNumber(),

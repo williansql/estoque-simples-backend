@@ -6,11 +6,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
-@Table(name = "exit_items")
+@Table(name = "output")
 public class OutputItems {
 
     @Id
@@ -35,11 +36,14 @@ public class OutputItems {
     @Column(name = "quantity")
     private Double quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "item_id", nullable = false)
-    private Items item;
+    @ManyToMany
+    @JoinTable(
+            name = "output",
+            joinColumns = @JoinColumn(name = "input_items_id"),
+            inverseJoinColumns = @JoinColumn(name = "items_id"))
+    private List<Items> items;
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id", nullable = false)
+    @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 }

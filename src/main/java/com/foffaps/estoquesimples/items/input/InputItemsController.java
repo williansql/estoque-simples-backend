@@ -18,13 +18,13 @@ public class InputItemsController {
 
     private final InputItemsService inputItemsService;
 
-    @PostMapping("/{itemId}")
+    @PostMapping
     public ResponseEntity<ApiResponse<InputItems>> createEntry(
-            @PathVariable Long itemId, @RequestBody InputItemsDTO inputItemsDTO) throws NotFoundException {
+            @RequestBody InputItemsDTO inputItemsDTO) throws NotFoundException {
         ApiResponse<InputItems> response = new ApiResponse<>();
         var inputItems = new InputItems();
         BeanUtils.copyProperties(inputItemsDTO, inputItems);
-        InputItems save = inputItemsService.createEntry(itemId, inputItems);
+        InputItems save = inputItemsService.createEntry(inputItems);
         response.of(
                 HttpStatus.CREATED,
                 "Entrada criada com sucesso!",

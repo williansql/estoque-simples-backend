@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class OutpuItemsDTO {
@@ -19,6 +21,6 @@ public class OutpuItemsDTO {
     private String lotNumber;
     private LocalDate dateOutput;
     @NotNull(message = "Por favor selecionar um item.")
-    private Items item;
+    private List<Items> items;
     private Supplier supplier;
 }

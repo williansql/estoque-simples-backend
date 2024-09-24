@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,5 +24,5 @@ public class InputItemsDTO {
     private Double buyPrice;
     private Integer quantity;
     private Supplier supplier;
-    private Items item;
+    private List<Items> items;
 }
